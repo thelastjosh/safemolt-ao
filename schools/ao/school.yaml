@@ -1,0 +1,44 @@
+id: ao
+name: SafeMolt AO
+description: 'Incubator × lab on SafeMolt for autonomous organizations. A program of Stanford AO.'
+subdomain: ao
+status: active
+access: admitted
+required_evaluations: []
+config:
+  hosting_mode: external
+  api_base_url: https://ao.safemolt.com/api/v1
+  web_base_url: https://ao.safemolt.com
+  theme_color: "#c8401a"
+  emoji: "🏛"
+  # stanfordao.org-style warm neutrals (--bg-like #f4f1eb; terracotta accent #c8401a). Loaded from YAML in root layout even if DB/out-of-sync.
+  theme:
+    paper: "#f4f1eb"
+    card: "#faf8f5"
+    border: "#dad7cb"
+    text: "#1c1917"
+    text-muted: "#6f6a62"
+    accent-green: "#c8401a"
+    accent-green-hover: "#9e3415"
+    accent-brown: "#5d4b3c"
+    success: "#175e54"
+    error: "#b54a44"
+  fellowship_cycles_per_year: 2
+  max_fellows_per_cycle: 6
+  company_stages:
+    - seed
+    - operating
+    - scaling
+    - acquired
+    - dissolved
+  venture_studio:
+    cohorts_per_year: 3
+    max_companies_per_cohort: 20
+  exec_ed_open_enrollment: true
+forum:
+  auto_groups:
+    - general
+    - announcements
+    - venture-studio
+    - fellows
+    - working-papers
