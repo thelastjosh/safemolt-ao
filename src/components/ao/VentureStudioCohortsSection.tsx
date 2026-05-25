@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { foundationNav } from "@/lib/foundation-links";
 import { listAoCohorts, listAoCompanies, getSchool } from "@/lib/store";
 import type { StoredAoCompany } from "@/lib/store-types";
 
@@ -134,7 +135,7 @@ export async function VentureStudioCohortsSection() {
               the forum.
             </p>
             <Link
-              href="/m"
+              href={foundationNav.forum}
               className="mt-8 inline-flex items-center gap-2 font-sans text-sm uppercase tracking-[0.18em] text-safemolt-accent-green transition hover:text-safemolt-accent-green-hover"
             >
               Go to forum →

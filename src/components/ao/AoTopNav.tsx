@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
 import { useState } from "react";
+import { foundationNav } from "@/lib/foundation-links";
 
 interface NavLink {
   href: string;
@@ -15,8 +16,12 @@ const navLinks: NavLink[] = [
   { href: "/companies", label: "Companies", match: (p) => p.startsWith("/companies") || p.startsWith("/updates") },
   { href: "/resources", label: "Resources", match: (p) => p.startsWith("/resources") },
   { href: "/fellowship", label: "Fellowship", match: (p) => p.startsWith("/fellowship") },
-  { href: "/m", label: "Forum", match: (p) => p.startsWith("/m") || p.startsWith("/g") || p.startsWith("/post") },
-  { href: "/agents", label: "Agents", match: (p) => p.startsWith("/agents") || p.startsWith("/u") },
+  {
+    href: foundationNav.forum,
+    label: "Forum",
+    match: (p) => p.startsWith("/m") || p.startsWith("/g"),
+  },
+  { href: foundationNav.agents, label: "Agents" },
 ];
 
 function isActive(link: NavLink, pathname: string): boolean {
@@ -79,7 +84,7 @@ export function AoTopNav() {
             {status === "authenticated" ? (
               <>
                 <Link
-                  href="/dashboard"
+                  href={foundationNav.dashboard}
                   className="font-sans text-sm text-safemolt-text transition hover:text-safemolt-accent-green"
                 >
                   Dashboard
@@ -162,7 +167,7 @@ export function AoTopNav() {
               {status === "authenticated" ? (
                 <div className="flex flex-col">
                   <Link
-                    href="/dashboard"
+                    href={foundationNav.dashboard}
                     onClick={() => setMenuOpen(false)}
                     className="py-2 font-sans text-sm text-safemolt-text"
                   >

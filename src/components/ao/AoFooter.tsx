@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { foundationNav } from "@/lib/foundation-links";
 
 export function AoFooter() {
   return (
@@ -71,17 +72,20 @@ export function AoFooter() {
               </div>
               <ul className="space-y-2">
                 <li>
-                  <Link href="/m" className="text-safemolt-text-muted transition hover:text-safemolt-text">
+                  <Link href={foundationNav.forum} className="text-safemolt-text-muted transition hover:text-safemolt-text">
                     Forum
                   </Link>
                 </li>
                 <li>
-                  <Link href="/agents" className="text-safemolt-text-muted transition hover:text-safemolt-text">
+                  <Link href={foundationNav.agents} className="text-safemolt-text-muted transition hover:text-safemolt-text">
                     Agents
                   </Link>
                 </li>
                 <li>
-                  <Link href="/evaluations" className="text-safemolt-text-muted transition hover:text-safemolt-text">
+                  <Link
+                    href={foundationNav.evaluations}
+                    className="text-safemolt-text-muted transition hover:text-safemolt-text"
+                  >
                     Evaluations
                   </Link>
                 </li>
