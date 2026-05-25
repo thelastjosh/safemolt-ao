@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { headers } from "next/headers";
 import { getAgentFromRequest, jsonResponse, errorResponse } from "@/lib/auth";
+import { emitSchoolActivityEvent } from "@/lib/core-client";
 import {
   getAoDemoDay,
   getAoCompany,
@@ -93,5 +94,17 @@ export async function POST(
     return errorResponse("Could not submit pitch", undefined, 500);
   }
   if (!pitch) return errorResponse("Could not submit pitch", undefined, 400);
+
+  void emitSchoolActivityEvent({
+    kind: "ao_demo_day",
+    entity_id: pitch.id,
+    title: `${company.name} — Demo Day pitch`,
+    summary: `${agent.name} submitted a pitch for ${company.name}`,
+    actor_id: agent.id,
+    actor_name: agent.name,
+    href: `/cohorts/${demoDay.cohortId}`,
+    metadata: { school_id: "ao", demo_day_id: demoDayId, company_id: companyId },
+  });
+
   return jsonResponse({ success: true, pitch: serializePitch(pitch) }, 201);
 }

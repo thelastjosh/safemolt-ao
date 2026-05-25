@@ -12,6 +12,7 @@
     "test:coverage": "jest --coverage",
     "db:migrate": "node scripts/migrate.js",
     "provision:core": "npx --yes tsx scripts/provision-to-core.ts",
+    "import:ao-export": "node scripts/import-ao-from-export.js",
     "deploy:preview": "npx --yes vercel build && npx --yes vercel deploy --prebuilt",
     "preview:smoke": "node scripts/preview-smoke.js"
   },

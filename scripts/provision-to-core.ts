@@ -11,6 +11,7 @@ import {
   syncClassesOnCore,
   syncPlaygroundGamesOnCore,
 } from "../src/lib/core-client";
+import { getSchoolConfig } from "../src/lib/schools/loader";
 
 const SCHOOL_ID = process.env.SCHOOL_ID ?? "ao";
 
@@ -28,8 +29,11 @@ async function main() {
   const core = getCoreBaseUrl();
   console.log(`[provision] school=${SCHOOL_ID} core=${core}`);
 
-  await provisionGroupsOnCore(SCHOOL_ID);
-  console.log("[provision] groups provision requested");
+  const forumGroups = getSchoolConfig().forum?.auto_groups ?? [];
+  await provisionGroupsOnCore(SCHOOL_ID, forumGroups);
+  console.log(
+    `[provision] groups provision requested (${forumGroups.length} from schools/ao/school.yaml)`
+  );
 
   const gamesDir = join(process.cwd(), "schools", "ao", "games");
   const gameYamls = loadYamlDir(gamesDir);

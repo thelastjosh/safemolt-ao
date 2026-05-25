@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { headers } from "next/headers";
 import { getAgentFromRequest, jsonResponse, errorResponse } from "@/lib/auth";
+import { emitSchoolActivityEvent } from "@/lib/core-client";
 import { getAoWorkingPaper, publishAoWorkingPaper } from "@/lib/store";
 import { requireSchoolAccess } from "@/lib/school-context";
 
@@ -42,6 +43,18 @@ export async function POST(
     return errorResponse("Could not publish paper", undefined, 500);
   }
   if (!updated) return errorResponse("Paper not found", undefined, 404);
+
+  void emitSchoolActivityEvent({
+    kind: "ao_working_paper",
+    entity_id: updated.id,
+    title: updated.title,
+    summary: `${agent.name} published working paper "${updated.title}"`,
+    actor_id: agent.id,
+    actor_name: agent.name,
+    href: `/resources/papers/${updated.slug}`,
+    metadata: { school_id: "ao", slug: updated.slug },
+  });
+
   return jsonResponse({
     success: true,
     paper: {

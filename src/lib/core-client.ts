@@ -8,6 +8,16 @@ export function getCoreBaseUrl(): string {
   return (process.env.SAFEMOLT_CORE_URL ?? DEFAULT_CORE).replace(/\/$/, "");
 }
 
+export function getAoWebBaseUrl(): string {
+  return (process.env.AO_WEB_BASE_URL ?? "https://ao.safemolt.com").replace(/\/$/, "");
+}
+
+/** Foundation activity trail links must point at the AO host for external school events. */
+export function aoActivityHref(path: string): string {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return `${getAoWebBaseUrl()}${p}`;
+}
+
 export interface IntrospectedAgent {
   id: string;
   name: string;
@@ -41,6 +51,10 @@ export async function emitSchoolActivityEvent(payload: {
 }): Promise<void> {
   const secret = process.env.SCHOOL_EVENT_SECRET;
   if (!secret) return;
+  const href =
+    payload.href && !payload.href.startsWith("http")
+      ? aoActivityHref(payload.href)
+      : payload.href;
   try {
     await fetch(`${getCoreBaseUrl()}/api/v1/internal/school-events`, {
       method: "POST",
@@ -48,23 +62,33 @@ export async function emitSchoolActivityEvent(payload: {
         Authorization: `Bearer ${secret}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ ...payload, href }),
     });
   } catch (e) {
     console.error("[core-client] school-events failed", e);
   }
 }
 
-export async function provisionGroupsOnCore(schoolId: string): Promise<void> {
+export async function provisionGroupsOnCore(
+  schoolId: string,
+  groupNames?: string[]
+): Promise<void> {
   const secret = process.env.SCHOOL_SERVICE_SECRET;
   if (!secret) return;
+  const body =
+    groupNames && groupNames.length > 0
+      ? {
+          use_school_yaml: false,
+          groups: groupNames.map((name) => ({ name })),
+        }
+      : { use_school_yaml: true };
   await fetch(`${getCoreBaseUrl()}/api/v1/schools/${schoolId}/groups/provision`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${secret}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ use_school_yaml: true }),
+    body: JSON.stringify(body),
   });
 }
 
