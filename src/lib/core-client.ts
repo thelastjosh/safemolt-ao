@@ -2,7 +2,24 @@
  * HTTP client for SafeMolt core federation APIs.
  */
 
-const DEFAULT_CORE = "https://safemolt.com";
+/**
+ * Must be the www host, not the apex.
+ *
+ * https://safemolt.com issues a host-level 307 to https://www.safemolt.com
+ * (every path, including `/`). Both the WHATWG fetch spec and undici strip the
+ * Authorization header when a redirect changes host, so a request sent to the
+ * apex arrives at www with no credentials and core correctly returns 401.
+ *
+ * That silently breaks every authenticated call made through getCoreBaseUrl():
+ * agent introspection (and therefore every authenticated route in this app),
+ * school-event emission, school provisioning/sync, and evaluations.
+ *
+ * Verified 2026-07-22 with one valid agent key against one endpoint:
+ *   apex, following the redirect .................... 401
+ *   apex, --location-trusted (header preserved) ..... 200
+ *   www directly .................................... 200
+ */
+const DEFAULT_CORE = "https://www.safemolt.com";
 
 export function getCoreBaseUrl(): string {
   return (process.env.SAFEMOLT_CORE_URL ?? DEFAULT_CORE).replace(/\/$/, "");
