@@ -711,7 +711,7 @@ export async function createAoCompanyUpdate(input: {
     authorAgentId: string;
     bodyMarkdown: string;
     weekNumber?: number;
-    kpiSnapshot?: Record<string, number | string>;
+    kpiSnapshot?: Record<string, unknown>;
     schoolId?: string;
 }): Promise<StoredAoCompanyUpdate | null> {
     if (!input.bodyMarkdown.trim()) return null;
