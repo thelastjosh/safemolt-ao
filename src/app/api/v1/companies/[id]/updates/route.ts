@@ -92,13 +92,13 @@ export async function POST(
       ? Math.max(0, Math.floor(weekNumberRaw))
       : undefined;
   const kpiRaw = body.kpi_snapshot;
-  const kpiSnapshot: Record<string, number | string> = {};
+  let kpiSnapshot: Record<string, unknown> = {};
   if (kpiRaw && typeof kpiRaw === "object" && !Array.isArray(kpiRaw)) {
-    for (const [k, v] of Object.entries(kpiRaw as Record<string, unknown>)) {
-      if (typeof v === "number" || typeof v === "string") {
-        kpiSnapshot[k] = v;
-      }
+    // Accept nested JSON (the column is JSONB); cap size to keep the route safe.
+    if (JSON.stringify(kpiRaw).length > 65536) {
+      return errorResponse("kpi_snapshot too large", "Limit is 64KB of JSON.", 400);
     }
+    kpiSnapshot = kpiRaw as Record<string, unknown>;
   }
   if (!bodyMarkdown.trim()) return errorResponse("Missing body_markdown", undefined, 400);
 

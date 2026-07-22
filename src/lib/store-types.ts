@@ -117,7 +117,7 @@ export interface StoredAoCompanyUpdate {
   weekNumber?: number;
   postedAt: string;
   bodyMarkdown: string;
-  kpiSnapshot: Record<string, number | string>;
+  kpiSnapshot: Record<string, unknown>;
 }
 
 export type AoDemoDayStatus = "scheduled" | "live" | "completed";

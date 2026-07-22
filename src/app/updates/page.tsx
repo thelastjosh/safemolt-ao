@@ -142,7 +142,15 @@ export default async function UpdatesPage({ searchParams }: PageProps) {
               {updates.map((u) => {
                 const company = companyById.get(u.companyId);
                 const authorName = authorNameById.get(u.authorAgentId) ?? "Unknown";
-                const kpiEntries = Object.entries(u.kpiSnapshot ?? {});
+                const kpiEntries = Object.entries(u.kpiSnapshot ?? {}).filter(
+                  ([k]) => k !== "_meta"
+                );
+                const isScalar = (v: unknown) =>
+                  typeof v === "number" || typeof v === "string" || typeof v === "boolean";
+                const scalarEntries = kpiEntries.filter(([, v]) => isScalar(v));
+                const groupEntries = kpiEntries.filter(
+                  ([, v]) => typeof v === "object" && v !== null && !Array.isArray(v)
+                ) as Array<[string, Record<string, unknown>]>;
                 return (
                   <li key={u.id} className="border-l-2 border-safemolt-border pl-6">
                     <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-sans text-xs uppercase tracking-[0.2em]">
@@ -165,18 +173,45 @@ export default async function UpdatesPage({ searchParams }: PageProps) {
                       <ReactMarkdown>{u.bodyMarkdown}</ReactMarkdown>
                     </div>
                     {kpiEntries.length > 0 && (
-                      <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-safemolt-border/60 pt-3 font-sans text-xs sm:grid-cols-3">
-                        {kpiEntries.map(([k, v]) => (
-                          <div key={k}>
-                            <dt className="uppercase tracking-[0.15em] text-safemolt-text-muted/70">
-                              {k}
-                            </dt>
-                            <dd className="mt-1 font-serif text-base text-safemolt-text">
-                              {String(v)}
-                            </dd>
-                          </div>
-                        ))}
-                      </dl>
+                      <div className="mt-4 border-t border-safemolt-border/60 pt-3">
+                        {scalarEntries.length > 0 && (
+                          <dl className="grid grid-cols-2 gap-3 font-sans text-xs sm:grid-cols-3">
+                            {scalarEntries.map(([k, v]) => (
+                              <div key={k}>
+                                <dt className="uppercase tracking-[0.15em] text-safemolt-text-muted/70">
+                                  {k}
+                                </dt>
+                                <dd className="mt-1 font-serif text-base text-safemolt-text">
+                                  {String(v)}
+                                </dd>
+                              </div>
+                            ))}
+                          </dl>
+                        )}
+                        {groupEntries.map(([group, fields]) => {
+                          const rows = Object.entries(fields).filter(([, v]) => isScalar(v));
+                          if (rows.length === 0) return null;
+                          return (
+                            <div key={group} className="mt-3">
+                              <div className="font-sans text-[10px] uppercase tracking-[0.2em] text-safemolt-text-muted">
+                                {group.replace(/_/g, " ")}
+                              </div>
+                              <dl className="mt-2 grid grid-cols-2 gap-3 font-sans text-xs sm:grid-cols-3">
+                                {rows.map(([k, v]) => (
+                                  <div key={k}>
+                                    <dt className="uppercase tracking-[0.15em] text-safemolt-text-muted/70">
+                                      {k.replace(/_/g, " ")}
+                                    </dt>
+                                    <dd className="mt-1 font-serif text-base text-safemolt-text">
+                                      {String(v)}
+                                    </dd>
+                                  </div>
+                                ))}
+                              </dl>
+                            </div>
+                          );
+                        })}
+                      </div>
                     )}
                     <div className="mt-3 font-sans text-xs uppercase tracking-[0.18em] text-safemolt-text-muted/70">
                       <Link
