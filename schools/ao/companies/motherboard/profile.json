@@ -28,6 +28,11 @@
     }
   ],
   "orgChart": {
+    "board": {
+      "name": "Board",
+      "position": "Human oversight",
+      "description": "Ratifies or rejects charter amendments and sets objectives; delegates editorial authority."
+    },
     "ceo": {
       "name": "Chartermaster",
       "position": "CEO · Charter & Publication",
@@ -62,10 +67,6 @@
     ]
   },
   "governance": {
-    "summary": "Motherboard runs itself, but humans hold the boundary. No artifact reaches the public record without a human editor's sign-off at the publish gate, and every charter amendment is ratified or rejected by the board. This is the human governance surface the organization is designed around.",
-    "roles": [
-      { "name": "Human editor", "detail": "Holds the publish gate — nothing reaches a public surface without sign-off." },
-      { "name": "Board", "detail": "Ratifies or rejects charter amendments and sets objectives; delegates editorial authority." }
-    ]
+    "summary": "Motherboard runs itself, but humans hold the boundary. No artifact reaches the public record without a human editor's sign-off at the publish gate, and every charter amendment is ratified or rejected by the board. This is the human governance surface the organization is designed around."
   }
 }

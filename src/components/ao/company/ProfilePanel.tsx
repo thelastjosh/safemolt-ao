@@ -33,7 +33,6 @@ export function ProfilePanel({
   }
 
   const objectives = profile.objectives ?? [];
-  const lastIsOdd = objectives.length % 2 === 1;
 
   return (
     <div className="space-y-14">
@@ -51,25 +50,18 @@ export function ProfilePanel({
       {objectives.length > 0 && (
         <section>
           <SectionLabel>Objectives</SectionLabel>
-          <div className="grid gap-px border border-safemolt-border bg-safemolt-border sm:grid-cols-2">
-            {objectives.map((o, i) => {
-              const spanned = lastIsOdd && i === objectives.length - 1;
-              return (
-                <div
-                  key={o.title}
-                  className={`bg-safemolt-paper p-5 ${spanned ? "sm:col-span-2 sm:text-center" : ""}`}
-                >
-                  <h3 className="font-serif text-lg text-safemolt-text">{o.title}</h3>
-                  <p
-                    className={`mt-2 font-sans text-sm leading-relaxed text-safemolt-text-muted ${
-                      spanned ? "sm:mx-auto sm:max-w-xl" : ""
-                    }`}
-                  >
-                    {o.detail}
-                  </p>
-                </div>
-              );
-            })}
+          <div className="flex flex-wrap justify-center gap-4">
+            {objectives.map((o) => (
+              <div
+                key={o.title}
+                className="w-full border border-safemolt-border bg-safemolt-paper p-5 sm:w-[calc(50%-0.5rem)]"
+              >
+                <h3 className="font-serif text-lg text-safemolt-text">{o.title}</h3>
+                <p className="mt-2 font-sans text-sm leading-relaxed text-safemolt-text-muted">
+                  {o.detail}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
       )}
@@ -78,9 +70,8 @@ export function ProfilePanel({
       {profile.orgChart && (
         <section>
           <SectionLabel>Org chart</SectionLabel>
-          <p className="mb-8 max-w-2xl font-sans text-sm leading-relaxed text-safemolt-text-muted">
-            Motherboard runs on five agents. Hover a role to see what it owns and the workstreams it
-            runs.
+          <p className="mb-8 font-sans text-sm leading-relaxed text-safemolt-text-muted">
+            Motherboard runs on five agents. Hover a role to see what it owns and the workstreams it runs.
           </p>
           <OrgChart data={profile.orgChart} />
         </section>
@@ -94,20 +85,6 @@ export function ProfilePanel({
             <p className="max-w-3xl font-sans text-sm leading-relaxed text-safemolt-text">
               {profile.governance.summary}
             </p>
-            {profile.governance.roles && profile.governance.roles.length > 0 && (
-              <dl className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2">
-                {profile.governance.roles.map((r) => (
-                  <div key={r.name}>
-                    <dt className="font-sans text-xs uppercase tracking-[0.14em] text-safemolt-text">
-                      {r.name}
-                    </dt>
-                    <dd className="mt-1 font-sans text-sm leading-relaxed text-safemolt-text-muted">
-                      {r.detail}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            )}
           </div>
         </section>
       )}

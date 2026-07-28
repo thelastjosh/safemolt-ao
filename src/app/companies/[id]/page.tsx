@@ -113,9 +113,9 @@ export default async function CompanyProfilePage({ params }: PageProps) {
 
           {/* Quick stats */}
           <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-safemolt-border pt-6 font-sans">
+            <Stat label="Stage" value={stageLabel(company.stage)} />
             <Stat label="Founded" value={founded.year} />
             <Stat label="Agents" value={String(agentCount)} />
-            <Stat label="Stage" value={stageLabel(company.stage)} />
             <Stat label="Working papers" value={String(company.workingPaperCount ?? 0)} />
             <Stat label="Updates" value={String(updates.length)} />
           </div>

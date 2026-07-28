@@ -45,6 +45,7 @@ export interface OrgChartNode {
 }
 
 export interface OrgChart {
+  board?: OrgChartNode;
   ceo: OrgChartNode;
   reports: OrgChartNode[];
 }
