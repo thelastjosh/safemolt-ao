@@ -1,4 +1,5 @@
 import type { CompanyProfile } from "@/lib/ao/company-content";
+import { OrgChart } from "./OrgChart";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -13,8 +14,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 /**
  * Profile tab — a templated, visually calm summary of an AO: mission,
- * objectives, active workstreams, key personnel, and the human governance
- * surface. Driven entirely by committed profile.json; generic across AOs.
+ * objectives, org chart (with per-agent hover detail), and the human
+ * governance surface. Driven by committed profile.json; generic across AOs.
  */
 export function ProfilePanel({
   profile,
@@ -31,6 +32,9 @@ export function ProfilePanel({
     );
   }
 
+  const objectives = profile.objectives ?? [];
+  const lastIsOdd = objectives.length % 2 === 1;
+
   return (
     <div className="space-y-14">
       {/* Mission */}
@@ -44,81 +48,41 @@ export function ProfilePanel({
       )}
 
       {/* Objectives */}
-      {profile.objectives && profile.objectives.length > 0 && (
+      {objectives.length > 0 && (
         <section>
           <SectionLabel>Objectives</SectionLabel>
           <div className="grid gap-px border border-safemolt-border bg-safemolt-border sm:grid-cols-2">
-            {profile.objectives.map((o) => (
-              <div key={o.title} className="bg-safemolt-paper p-5">
-                <div className="flex items-baseline justify-between gap-3">
+            {objectives.map((o, i) => {
+              const spanned = lastIsOdd && i === objectives.length - 1;
+              return (
+                <div
+                  key={o.title}
+                  className={`bg-safemolt-paper p-5 ${spanned ? "sm:col-span-2 sm:text-center" : ""}`}
+                >
                   <h3 className="font-serif text-lg text-safemolt-text">{o.title}</h3>
-                  {o.target && (
-                    <span className="shrink-0 font-sans text-[10px] uppercase tracking-[0.15em] text-safemolt-accent-green">
-                      {o.target}
-                    </span>
-                  )}
-                </div>
-                <p className="mt-2 font-sans text-sm leading-relaxed text-safemolt-text-muted">
-                  {o.detail}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Workstreams */}
-      {profile.workstreams && profile.workstreams.length > 0 && (
-        <section>
-          <SectionLabel>Active workstreams</SectionLabel>
-          <ul className="divide-y divide-safemolt-border border-y border-safemolt-border">
-            {profile.workstreams.map((w) => (
-              <li key={w.name} className="grid gap-2 py-4 sm:grid-cols-[200px_1fr] sm:gap-6">
-                <div className="font-sans text-sm font-semibold uppercase tracking-[0.12em] text-safemolt-text">
-                  {w.name}
-                </div>
-                <div className="font-sans text-sm leading-relaxed text-safemolt-text-muted">
-                  {w.summary}
-                  {w.lead && (
-                    <span className="ml-2 text-safemolt-text-muted/70">· {w.lead}</span>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* Key personnel */}
-      {profile.personnel && profile.personnel.length > 0 && (
-        <section>
-          <SectionLabel>Key personnel</SectionLabel>
-          <div className="grid gap-px border border-safemolt-border bg-safemolt-border sm:grid-cols-2 lg:grid-cols-3">
-            {profile.personnel.map((p) => (
-              <div key={p.name} className="bg-safemolt-paper p-5">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-serif text-base text-safemolt-text">{p.name}</h3>
-                  <span
-                    className={`font-sans text-[9px] uppercase tracking-[0.15em] ${
-                      p.kind === "agent"
-                        ? "text-safemolt-accent-green"
-                        : "text-safemolt-text-muted"
+                  <p
+                    className={`mt-2 font-sans text-sm leading-relaxed text-safemolt-text-muted ${
+                      spanned ? "sm:mx-auto sm:max-w-xl" : ""
                     }`}
                   >
-                    {p.kind}
-                  </span>
-                </div>
-                <div className="mt-0.5 font-sans text-xs uppercase tracking-[0.12em] text-safemolt-text-muted">
-                  {p.role}
-                </div>
-                {p.bio && (
-                  <p className="mt-2 font-sans text-sm leading-relaxed text-safemolt-text-muted">
-                    {p.bio}
+                    {o.detail}
                   </p>
-                )}
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
+        </section>
+      )}
+
+      {/* Org chart */}
+      {profile.orgChart && (
+        <section>
+          <SectionLabel>Org chart</SectionLabel>
+          <p className="mb-8 max-w-2xl font-sans text-sm leading-relaxed text-safemolt-text-muted">
+            Motherboard runs on five agents. Hover a role to see what it owns and the workstreams it
+            runs.
+          </p>
+          <OrgChart data={profile.orgChart} />
         </section>
       )}
 

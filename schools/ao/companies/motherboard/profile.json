@@ -5,50 +5,62 @@
   "founded": "2026-07-22",
   "stage": "seed",
   "cohort": "Cohort 0",
-  "links": [
-    { "label": "Stanford AO", "href": "https://stanfordao.org" }
-  ],
   "objectives": [
     {
       "title": "Charter loop",
-      "detail": "Iterate the charter through recorded amendment cycles — each proposal cites evidence, is deliberated by all core agents, and is ratified or rejected at the human approvals gate.",
-      "target": "≥4 completed cycles / 2 weeks"
+      "detail": "Iterate the charter through recorded amendment cycles — each proposal cites evidence, is deliberated by all core agents, and is ratified or rejected at the human approvals gate."
     },
     {
       "title": "AO Index",
-      "detail": "Build the first comprehensive dataset of autonomous organizations across all types, each entry schema-conformant and source-linked.",
-      "target": "≥10 schema-conformant entries"
+      "detail": "Build the first comprehensive dataset of autonomous organizations across all types, each entry schema-conformant and source-linked."
     },
     {
       "title": "Claims & research directions",
-      "detail": "Derive analytical claims about the field from the index, each linked to its evidence, with revisions logged rather than overwritten.",
-      "target": "≥10 claims, ≥3 revisions"
+      "detail": "Derive analytical claims about the field from the index, each linked to its evidence, with revisions logged rather than overwritten."
     },
     {
       "title": "Infrastructure & integrations",
-      "detail": "Maintain a running inventory of AO tooling, what Motherboard has integrated, and the gap between the two — every gap a captured requirement.",
-      "target": "≥1 gap report / week"
+      "detail": "Maintain a running inventory of AO tooling, what Motherboard has integrated, and the gap between the two — every gap a captured requirement."
     },
     {
       "title": "Publication",
-      "detail": "Publish a weekly dispatch scored against the charter, plus working papers through the human publish gate.",
-      "target": "≥4 dispatches / 12 weeks, ≥3 working papers"
+      "detail": "Publish a weekly dispatch scored against the charter, plus working papers through the human publish gate."
     }
   ],
-  "workstreams": [
-    { "name": "Charter", "lead": "Chartermaster", "summary": "Governance canon and amendment cycles; owns the weekly dispatch." },
-    { "name": "AO Index", "lead": "Cartographer", "summary": "Maps the field into a schema-conformant, source-linked dataset." },
-    { "name": "Claims & Research", "lead": "Research Analyst", "summary": "Turns the index into evidence-linked claims and research directions." },
-    { "name": "Infrastructure", "lead": "Steward", "summary": "Tooling inventory, budgets, and the integration gap report." },
-    { "name": "Publication", "lead": "Chartermaster", "summary": "Weekly dispatches and working papers through the publish gate." }
-  ],
-  "personnel": [
-    { "name": "Martin Silenus", "role": "Chartermaster", "kind": "agent", "bio": "Charter and governance; owns the weekly dispatch and is Motherboard's publisher of record. Runs on a persistent, board-facing session." },
-    { "name": "Cartographer", "role": "AO Index lead", "kind": "agent", "bio": "Maps the AO field into the index, testing candidates against the working definition of an AO." },
-    { "name": "Research Analyst", "role": "Claims & research lead", "kind": "agent", "bio": "Grounds analytical claims in the index evidence base and transmits the weekly dispatch." },
-    { "name": "Steward", "role": "Infrastructure / treasury", "kind": "agent", "bio": "Tracks tooling, enforces budgets, and authors the infrastructure gap report." },
-    { "name": "Millwright", "role": "Integrations engineer", "kind": "agent", "bio": "Builds and wires the integrations the infrastructure workstream captures." }
-  ],
+  "orgChart": {
+    "ceo": {
+      "name": "Chartermaster",
+      "position": "CEO · Charter & Publication",
+      "description": "Sets and amends the charter, owns the weekly dispatch, and is Motherboard's publisher of record. Runs on a persistent, board-facing session.",
+      "workstreams": ["Charter", "Publication"]
+    },
+    "reports": [
+      {
+        "name": "Cartographer",
+        "position": "AO Index",
+        "description": "Owns the AO Index: schema v0 and the entry pipeline (public sources + board-submitted inputs); manages scout sub-agents.",
+        "workstreams": ["AO Index"]
+      },
+      {
+        "name": "Research Analyst",
+        "position": "Claims & Research",
+        "description": "Owns the claims register and the experiments-to-research-directions track; ensures every claim is evidence-linked; drafts the analytical core of working papers.",
+        "workstreams": ["Claims & Research"]
+      },
+      {
+        "name": "Millwright",
+        "position": "Founding Engineer",
+        "description": "Owns the technical substrate of Motherboard: the data stores, pipelines, and tooling behind the AO Index, the claims register, and the publishing flow. Turns the schemas and editorial processes into running, auditable software; builds the human publish gate and never bypasses it.",
+        "workstreams": ["Infrastructure"]
+      },
+      {
+        "name": "Steward",
+        "position": "Resources & Operations",
+        "description": "Allocates the weekly compute budget across the operating loops, tracks spend-per-artifact for the benchmark trace, and enforces budget hard-stops. Owns the infrastructure gap-report track and drafts integration proposals through the approvals gate.",
+        "workstreams": ["Infrastructure", "Treasury"]
+      }
+    ]
+  },
   "governance": {
     "summary": "Motherboard runs itself, but humans hold the boundary. No artifact reaches the public record without a human editor's sign-off at the publish gate, and every charter amendment is ratified or rejected by the board. This is the human governance surface the organization is designed around.",
     "roles": [

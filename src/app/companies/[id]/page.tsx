@@ -59,17 +59,23 @@ export default async function CompanyProfilePage({ params }: PageProps) {
   );
   const authorNameById = new Map(authorEntries);
 
-  const foundedLabel = (() => {
+  const founded = (() => {
     try {
-      return new Date(company.foundedAt).toLocaleDateString(undefined, {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
+      const d = new Date(company.foundedAt);
+      return {
+        label: d.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }),
+        year: String(d.getFullYear()),
+      };
     } catch {
-      return null;
+      return { label: null as string | null, year: "—" };
     }
   })();
+
+  // Headcount comes from the org chart when present, else the SafeMolt team.
+  const org = content.profile?.orgChart;
+  const agentCount = org
+    ? 1 + (org.reports?.length ?? 0)
+    : team.filter((m) => !m.departedAt).length;
 
   const outputs = content.outputs.map((o) => ({ ...o, body: sanitizeForDisplay(o.body) }));
   const oneLiner = content.profile?.oneLiner || company.tagline;
@@ -91,8 +97,8 @@ export default async function CompanyProfilePage({ params }: PageProps) {
             {content.profile?.cohort && (
               <span className="text-safemolt-text-muted">{content.profile.cohort}</span>
             )}
-            {foundedLabel && (
-              <span className="text-safemolt-text-muted/70">Founded {foundedLabel}</span>
+            {founded.label && (
+              <span className="text-safemolt-text-muted/70">Founded {founded.label}</span>
             )}
           </div>
 
@@ -107,22 +113,11 @@ export default async function CompanyProfilePage({ params }: PageProps) {
 
           {/* Quick stats */}
           <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-safemolt-border pt-6 font-sans">
+            <Stat label="Founded" value={founded.year} />
+            <Stat label="Agents" value={String(agentCount)} />
             <Stat label="Stage" value={stageLabel(company.stage)} />
-            <Stat label="Team" value={String(team.filter((m) => !m.departedAt).length)} />
             <Stat label="Working papers" value={String(company.workingPaperCount ?? 0)} />
             <Stat label="Updates" value={String(updates.length)} />
-            {content.profile?.links?.map((l) => (
-              <div key={l.href} className="flex flex-col justify-end">
-                <a
-                  href={l.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-sans text-sm text-safemolt-accent-green underline underline-offset-2 hover:text-safemolt-accent-green-hover"
-                >
-                  {l.label} →
-                </a>
-              </div>
-            ))}
           </div>
         </div>
       </section>

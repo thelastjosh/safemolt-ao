@@ -335,6 +335,16 @@ export function formatDispatch(
     }
   }
 
+  // Governance shouldn't repeat the summary or an accomplishment verbatim
+  // (the fallback can pick the same sentence when it mentions a gate/sign-off).
+  const normKey = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 60);
+  const summaryKey = summary ? normKey(summary) : null;
+  const accompKeys = new Set(accomplishments.map(normKey));
+  governance = governance.filter((g) => {
+    const k = normKey(g);
+    return k !== summaryKey && !accompKeys.has(k);
+  });
+
   return {
     summary,
     accomplishments: accomplishments.slice(0, 12),

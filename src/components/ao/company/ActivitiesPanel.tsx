@@ -49,24 +49,37 @@ export function ActivitiesPanel({
   }
 
   return (
-    <div className="space-y-16">
-      {updates.map((u) => {
+    <div className="space-y-4">
+      {updates.map((u, idx) => {
         const f = formatDispatch(u.bodyMarkdown, u.kpiSnapshot);
         const author = authorNameById.get(u.authorAgentId);
         return (
-          <article key={u.id} className="scroll-mt-24">
-            {/* Header */}
-            <header className="border-b border-safemolt-border pb-4">
-              <div className="font-sans text-xs uppercase tracking-[0.25em] text-safemolt-accent-green">
-                Weekly Update{u.weekNumber != null ? ` · Week ${u.weekNumber}` : ""}
+          <details
+            key={u.id}
+            open={idx === 0}
+            className="group/update border border-safemolt-border"
+          >
+            {/* Header row toggles the dropdown */}
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 transition hover:bg-safemolt-card/40">
+              <div>
+                <div className="font-sans text-xs uppercase tracking-[0.25em] text-safemolt-accent-green">
+                  Weekly Update{u.weekNumber != null ? ` · Week ${u.weekNumber}` : ""}
+                </div>
+                <div className="mt-1 font-sans text-sm text-safemolt-text-muted">
+                  {formatDate(u.postedAt)}
+                </div>
               </div>
-              <div className="mt-1 font-sans text-sm text-safemolt-text-muted">
-                {formatDate(u.postedAt)}
-              </div>
-            </header>
+              <span
+                className="font-sans text-lg leading-none text-safemolt-accent-green transition group-open/update:rotate-45"
+                aria-hidden
+              >
+                +
+              </span>
+            </summary>
 
+            <div className="border-t border-safemolt-border/60 px-5 pb-6 pt-5">
             {/* Summary */}
-            <section className="mt-6">
+            <section>
               <SubHeader>Summary</SubHeader>
               {f.summary && (
                 <p className="max-w-3xl font-sans text-sm leading-relaxed text-safemolt-text">
@@ -154,10 +167,10 @@ export function ActivitiesPanel({
 
             {/* Full dispatch (collapsible) */}
             {f.narrative && (
-              <details className="group mt-6 border-t border-safemolt-border/60 pt-3">
+              <details className="group/full mt-6 border-t border-safemolt-border/60 pt-3">
                 <summary className="cursor-pointer list-none font-sans text-xs uppercase tracking-[0.18em] text-safemolt-accent-green transition hover:text-safemolt-accent-green-hover">
-                  <span className="group-open:hidden">Read the full dispatch →</span>
-                  <span className="hidden group-open:inline">Collapse dispatch ↑</span>
+                  <span className="group-open/full:hidden">Read the full dispatch →</span>
+                  <span className="hidden group-open/full:inline">Collapse dispatch ↑</span>
                 </summary>
                 <div className="mt-4">
                   <AoMarkdown>{f.narrative}</AoMarkdown>
@@ -170,7 +183,8 @@ export function ActivitiesPanel({
                 {author}
               </div>
             )}
-          </article>
+            </div>
+          </details>
         );
       })}
     </div>

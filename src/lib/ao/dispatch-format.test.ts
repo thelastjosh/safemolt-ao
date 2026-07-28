@@ -83,6 +83,24 @@ describe("formatDispatch", () => {
     expect(f.performance[0].rows).toContainEqual({ label: "Artifacts", value: "1" });
   });
 
+  it("does not repeat the summary sentence as a governance item", () => {
+    const md = [
+      "# Dispatch",
+      "",
+      "## Narrative",
+      "",
+      "This week produced its first artifacts, cleared through human sign-off at the publish gate.",
+      "",
+      "### Publication",
+      "",
+      "**Editorial Policy ratified** by the board.",
+    ].join("\n");
+    const f = formatDispatch(md, {});
+    // the summary mentions sign-off, but must not appear verbatim in governance
+    const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 60);
+    expect(f.governance.map(norm)).not.toContain(norm(f.summary ?? ""));
+  });
+
   it("falls back to workstream headings + governance signals for legacy dispatches", () => {
     const md = [
       "# Dispatch",

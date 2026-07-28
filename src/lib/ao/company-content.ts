@@ -37,6 +37,18 @@ export interface CompanyGovernance {
   roles?: { name: string; detail: string }[];
 }
 
+export interface OrgChartNode {
+  name: string;
+  position: string;
+  description?: string;
+  workstreams?: string[];
+}
+
+export interface OrgChart {
+  ceo: OrgChartNode;
+  reports: OrgChartNode[];
+}
+
 export interface CompanyProfile {
   id: string;
   oneLiner?: string;
@@ -48,6 +60,7 @@ export interface CompanyProfile {
   objectives?: CompanyObjective[];
   workstreams?: CompanyWorkstream[];
   personnel?: CompanyPerson[];
+  orgChart?: OrgChart;
   governance?: CompanyGovernance;
 }
 
