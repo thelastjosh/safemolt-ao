@@ -156,7 +156,7 @@ export default async function UpdatesPage({ searchParams }: PageProps) {
                     <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-sans text-xs uppercase tracking-[0.2em]">
                       {company ? (
                         <Link
-                          href={`/companies#${company.id}`}
+                          href={`/companies/${company.id}`}
                           className="text-safemolt-accent-green transition hover:text-safemolt-accent-green-hover"
                         >
                           {company.name}

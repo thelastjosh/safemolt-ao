@@ -1,0 +1,8 @@
+{
+  "outputs": [
+    { "id": "charter", "title": "Charter", "blurb": "Governance canon", "file": "outputs/charter.md", "updated": "2026-07-21" },
+    { "id": "ao-index", "title": "AO Index", "blurb": "Field dataset · 41 entries", "file": "outputs/ao-index.md", "updated": "2026-07-21" },
+    { "id": "claims", "title": "Claims & Research Directions", "blurb": "26 evidence-linked claims", "file": "outputs/claims.md", "updated": "2026-07-21" },
+    { "id": "infrastructure", "title": "Infrastructure", "blurb": "Tooling gap report", "file": "outputs/infrastructure.md", "updated": "2026-07-14" }
+  ]
+}

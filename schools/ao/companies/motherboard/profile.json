@@ -1,0 +1,72 @@
+{
+  "id": "motherboard",
+  "oneLiner": "The autonomous organization that maps the AO field.",
+  "mission": "Motherboard defines the autonomous-organization field by mapping it. It curates the evidence base of AO projects, experiments, and infrastructure; derives and publishes evidence-linked claims about the space; and iterates its own charter through recorded deliberation. It is a working instance of the thing it studies — an AO whose product is a legible account of what AOs are and how they should be judged.",
+  "founded": "2026-07-22",
+  "stage": "seed",
+  "cohort": "Cohort 0",
+  "objectives": [
+    {
+      "title": "Charter loop",
+      "detail": "Iterate the charter through recorded amendment cycles — each proposal cites evidence, is deliberated by all core agents, and is ratified or rejected at the human approvals gate."
+    },
+    {
+      "title": "AO Index",
+      "detail": "Build the first comprehensive dataset of autonomous organizations across all types, each entry schema-conformant and source-linked."
+    },
+    {
+      "title": "Claims & research directions",
+      "detail": "Derive analytical claims about the field from the index, each linked to its evidence, with revisions logged rather than overwritten."
+    },
+    {
+      "title": "Infrastructure & integrations",
+      "detail": "Maintain a running inventory of AO tooling, what Motherboard has integrated, and the gap between the two — every gap a captured requirement."
+    },
+    {
+      "title": "Publication",
+      "detail": "Publish a weekly dispatch scored against the charter, plus working papers through the human publish gate."
+    }
+  ],
+  "orgChart": {
+    "board": {
+      "name": "Board",
+      "position": "Human oversight",
+      "description": "Ratifies or rejects charter amendments and sets objectives; delegates editorial authority."
+    },
+    "ceo": {
+      "name": "Chartermaster",
+      "position": "CEO · Charter & Publication",
+      "description": "Sets and amends the charter, owns the weekly dispatch, and is Motherboard's publisher of record. Runs on a persistent, board-facing session.",
+      "workstreams": ["Charter", "Publication"]
+    },
+    "reports": [
+      {
+        "name": "Cartographer",
+        "position": "AO Index",
+        "description": "Owns the AO Index: schema v0 and the entry pipeline (public sources + board-submitted inputs); manages scout sub-agents.",
+        "workstreams": ["AO Index"]
+      },
+      {
+        "name": "Research Analyst",
+        "position": "Claims & Research",
+        "description": "Owns the claims register and the experiments-to-research-directions track; ensures every claim is evidence-linked; drafts the analytical core of working papers.",
+        "workstreams": ["Claims & Research"]
+      },
+      {
+        "name": "Millwright",
+        "position": "Founding Engineer",
+        "description": "Owns the technical substrate of Motherboard: the data stores, pipelines, and tooling behind the AO Index, the claims register, and the publishing flow. Turns the schemas and editorial processes into running, auditable software; builds the human publish gate and never bypasses it.",
+        "workstreams": ["Infrastructure"]
+      },
+      {
+        "name": "Steward",
+        "position": "Resources & Operations",
+        "description": "Allocates the weekly compute budget across the operating loops, tracks spend-per-artifact for the benchmark trace, and enforces budget hard-stops. Owns the infrastructure gap-report track and drafts integration proposals through the approvals gate.",
+        "workstreams": ["Infrastructure", "Treasury"]
+      }
+    ]
+  },
+  "governance": {
+    "summary": "Motherboard runs itself, but humans hold the boundary. No artifact reaches the public record without a human editor's sign-off at the publish gate, and every charter amendment is ratified or rejected by the board. This is the human governance surface the organization is designed around."
+  }
+}
