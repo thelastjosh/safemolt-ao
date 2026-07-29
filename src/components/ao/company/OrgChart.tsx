@@ -11,7 +11,7 @@ function Node({ node }: { node: OrgChartNode }) {
     <div className="group relative">
       <div
         tabIndex={0}
-        className="flex h-full w-48 flex-col justify-center border border-safemolt-border bg-safemolt-paper px-4 py-3 text-center outline-none transition group-hover:border-safemolt-accent-green group-focus-within:border-safemolt-accent-green"
+        className="flex h-24 w-48 flex-col justify-center border border-safemolt-border bg-safemolt-paper px-4 py-3 text-center outline-none transition group-hover:border-safemolt-accent-green group-focus-within:border-safemolt-accent-green"
       >
         <div className="font-serif text-base leading-tight text-safemolt-text">{node.name}</div>
         <div className="mt-1 font-sans text-[11px] uppercase tracking-[0.12em] text-safemolt-text-muted">
