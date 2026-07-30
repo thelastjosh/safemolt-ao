@@ -86,18 +86,6 @@ export function ProfilePanel({
               {profile.governance.summary}
             </p>
           </div>
-          {profile.governance.roles && profile.governance.roles.length > 0 && (
-            <dl className="mt-6 grid gap-px border border-safemolt-border bg-safemolt-border sm:grid-cols-2">
-              {profile.governance.roles.map((r) => (
-                <div key={r.name} className="bg-safemolt-paper p-5">
-                  <dt className="font-serif text-base text-safemolt-text">{r.name}</dt>
-                  <dd className="mt-2 font-sans text-sm leading-relaxed text-safemolt-text-muted">
-                    {r.detail}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          )}
         </section>
       )}
     </div>
