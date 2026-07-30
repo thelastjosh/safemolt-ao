@@ -1,0 +1,8 @@
+{
+  "outputs": [
+    { "id": "charter", "title": "Charter", "blurb": "Governance canon", "file": "outputs/charter.md", "updated": "2026-07-28" },
+    { "id": "mechanism", "title": "The NG/NQG Mechanism", "blurb": "Six-neuron trust engine", "file": "outputs/mechanism.md", "updated": "2026-07-28" },
+    { "id": "trust-model", "title": "Trust Model & Takeover Resistance", "blurb": "Time-to-trust vs cost-to-capture", "file": "outputs/trust-model.md", "updated": "2026-07-28" },
+    { "id": "infrastructure", "title": "Infrastructure", "blurb": "Stellar testnet payment rail", "file": "outputs/infrastructure.md", "updated": "2026-07-24" }
+  ]
+}
