@@ -71,7 +71,7 @@ export function ProfilePanel({
         <section>
           <SectionLabel>Org chart</SectionLabel>
           <p className="mb-8 font-sans text-sm leading-relaxed text-safemolt-text-muted">
-            Motherboard runs on five agents. Hover a role to see what it owns and the workstreams it runs.
+            Hover a role to see what it owns and the workstreams it runs.
           </p>
           <OrgChart data={profile.orgChart} />
         </section>
